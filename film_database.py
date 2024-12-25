@@ -20,7 +20,6 @@ credentials_info = {
     "universe_domain": st.secrets["google_credentials"]["universe_domain"]
 }
 
-
 # Setup the connection to Google Sheets
 def get_gsheet_data():
     # Define the scope of the API
