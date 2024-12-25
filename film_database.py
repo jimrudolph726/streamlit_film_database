@@ -134,10 +134,10 @@ if selected_tab == "Film Database":
 
 
 
-        # Button to save edits
-        if st.button("Save Changes"):
-            films_df = updated_df  # Update the DataFrame with the new data
-            update_gsheet_data(films_df)  # Save changes to Google Sheets
-            st.success("Changes saved successfully!")
+    # Button to save edits
+    if st.button("Save Changes"):
+        films_df = updated_df  # Update the DataFrame with the new data
+        update_gsheet_data(films_df)  # Save changes to Google Sheets
+        st.success("Changes saved successfully!")
 
 
