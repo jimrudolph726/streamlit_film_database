@@ -106,23 +106,19 @@ if selected_tab == "Film Database":
     st.write("Selected rows:", selected_rows)
 
     if st.button("Delete Selected Row"):
-        if len(selected_rows) > 0:  # Check if there are selected rows
-            for row in selected_rows:
-                st.write("Row type:", type(row))  # Check the type of the row
-                st.write("Row content:", row)  # Check the content of the row
+        if selected_rows:  # Check if there are selected rows
+            for title in selected_rows:
+                st.write("Deleting row with title:", title)  # Show the title being deleted
     
-                # If the row is a dictionary, proceed with the deletion
-                if isinstance(row, dict):
-                    st.write("Row is a dictionary:", row)
-                    films_df = films_df[films_df['Title'] != row['Title']]  # Access Title properly
-                else:
-                    st.warning("Selected row is not in the expected format.")
+                # Delete the row where the 'Title' matches
+                films_df = films_df[films_df['Title'] != title]
             
             # Update Google Sheets with the modified DataFrame
             update_gsheet_data(films_df)
             st.success("Selected film(s) have been deleted!")
         else:
             st.warning("Please select a row to delete.")
+    
 
     # Button to save edits
     if st.button("Save Changes"):
