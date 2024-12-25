@@ -104,30 +104,34 @@ if selected_tab == "Film Database":
 
         # Button to delete selected row
     if st.button("Delete Selected Row"):
-        # Check if the selected row is a valid list
-        if isinstance(selected_rows, list) and selected_rows:
-            row_to_delete = selected_rows[0]  # Get the first selected row
+        st.write("Selected Rows:", selected_rows)  # Debug: Show selected rows
+        if isinstance(selected_rows, list) and selected_rows:  # Check if selected_rows is a non-empty list
+            row_to_delete = selected_rows[0]  # Get the first selected row (assuming it's a dictionary)
             
-            # Debugging: show the selected row data
-            st.write("Row selected for deletion:", row_to_delete)
+            # Debug: print selected row
+            st.write("Selected Row to Delete:", row_to_delete)
             
-            # Ensure 'Title' key exists in the row
+            # Ensure 'Title' key exists in the row (or use another unique identifier)
             if 'Title' in row_to_delete:
                 title_to_delete = row_to_delete['Title']
-                # Debugging: show the title
-                st.write(f"Deleting film with title: {title_to_delete}")
-
-                # Filter out the row to delete
-                films_df = films_df[films_df["Title"] != title_to_delete]
-
-                # Update the Google Sheet
-                update_gsheet_data(films_df)
-                st.success(f"Film '{title_to_delete}' has been deleted!")
+                # Debug: print the title to be deleted
+                st.write(f"Deleting film: {title_to_delete}")
+                
+                # Check if the title exists in the DataFrame
+                if title_to_delete in films_df["Title"].values:
+                    # Remove row based on Title
+                    films_df = films_df[films_df["Title"] != title_to_delete]  # Filter out the row with the matching title
+                    
+                    # Update Google Sheets with the new data
+                    update_gsheet_data(films_df)
+                    st.success(f"Deleted film: {title_to_delete}")
+                else:
+                    st.warning(f"Film '{title_to_delete}' not found in the database.")
             else:
                 st.warning("The selected row does not have a 'Title' key.")
         else:
             st.warning("Please select a row to delete.")
-            
+
     # Button to save edits
     if st.button("Save Changes"):
         films_df = updated_df  # Update the DataFrame with the new data
