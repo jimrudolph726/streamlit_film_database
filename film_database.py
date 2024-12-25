@@ -78,8 +78,8 @@ else:
     # Display the films in the database
     st.subheader("Films You Have Seen")
 
-if len(films_df) > 0:
-    st.dataframe(films_df)
-else:
-    st.write("No films added yet.")
+    if len(films_df) > 0:
+        st.dataframe(films_df)
+    else:
+        st.write("No films added yet.")
 
