@@ -103,7 +103,7 @@ if selected_tab == "Film Database":
     selected_rows = grid_response["selected_rows"]  # Get selected row(s)
 
     if st.button("Delete Selected Row"):
-        if selected_rows:  # If there are selected rows
+        if len(selected_rows) > 0:  # Check if there are selected rows
             for row in selected_rows:
                 # Assuming 'Title' is unique
                 films_df = films_df[films_df['Title'] != row['Title']]
@@ -111,6 +111,8 @@ if selected_tab == "Film Database":
             # Update Google Sheets with the modified DataFrame
             update_gsheet_data(films_df)
             st.success("Selected film(s) have been deleted!")
+        else:
+            st.warning("Please select a row to delete.")
 
     # Button to save edits
     if st.button("Save Changes"):
