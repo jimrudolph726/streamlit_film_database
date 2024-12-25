@@ -103,8 +103,9 @@ if selected_tab == "Film Database":
     selected_rows = grid_response["selected_rows"]  # Get selected row(s)
 
     # Button to delete selected row
+    # Button to delete selected row
     if st.button("Delete Selected Row"):
-        if selected_rows:  # Check if selected_rows is not empty
+        if isinstance(selected_rows, list) and selected_rows:  # Check if selected_rows is a non-empty list
             row_to_delete = selected_rows[0]  # Get the first selected row (assuming it's a dictionary)
             
             # Ensure 'Title' key exists in the row (or use another unique identifier)
@@ -117,6 +118,7 @@ if selected_tab == "Film Database":
                 st.warning("The selected row does not have a 'Title' key.")
         else:
             st.warning("Please select a row to delete.")
+
     # Button to save edits
     if st.button("Save Changes"):
         films_df = updated_df  # Update the DataFrame with the new data
