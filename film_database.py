@@ -74,19 +74,22 @@ if selected_tab == "Add Film":
             films_df = pd.concat([films_df, new_film], ignore_index=True)
             update_gsheet_data(films_df)
             st.success(f"Film '{title}' added to the database!")
-if selected_tab == "Films Database":
-    # Display the films in the database
-    st.subheader("Films You Have Seen")
-
-    if len(films_df) > 0:
-        st.dataframe(films_df)
-    else:
-        st.write("No films added yet.")
-
-    # Filter the DataFrame based on the search term
+            
+if selected_tab == "Film Database":
+    # Search functionality
     search_term = st.text_input("Search films by title, genre, or director")
+    
+    # Filter the DataFrame based on the search term
     if search_term:
         filtered_df = films_df[films_df.apply(lambda row: row.astype(str).str.contains(search_term, case=False).any(), axis=1)]
     else:
-        filtered_df = films_df 
+        filtered_df = films_df  # If no search term, show all films
+
+    # Display the films in the database
+    st.subheader("Films You Have Seen")
+
+    if len(filtered_df) > 0:
+        st.dataframe(filtered_df)
+    else:
+        st.write("No films found matching your search.")
 
