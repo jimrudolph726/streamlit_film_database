@@ -77,7 +77,7 @@ if selected_tab == "Add Film":
             
 if selected_tab == "Film Database":
     # Search functionality
-    search_term = st.text_input("Search films by title, genre, or director")
+    search_term = st.text_input("Search films by title, genre, director or year")
     
     # Filter the DataFrame based on the search term
     if search_term:
