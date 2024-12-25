@@ -104,8 +104,8 @@ if selected_tab == "Film Database":
 
     # Button to delete selected row
     if st.button("Delete Selected Row"):
-        if selected_rows:
-            # Identify the row to delete
+        if len(selected_rows) > 0:  # Check if there are any selected rows
+        # Identify the row to delete
             row_to_delete = selected_rows[0]
             films_df = films_df[~(films_df["Title"] == row_to_delete["Title"])]  # Remove row based on a unique column
             update_gsheet_data(films_df)  # Update Google Sheets
