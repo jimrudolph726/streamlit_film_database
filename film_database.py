@@ -95,12 +95,11 @@ if selected_tab == "Film Database":
         fit_columns_on_grid_load=True,
         theme="streamlit",
         enable_enterprise_modules=False,
-        height=400,
+        height=250,
     )
 
     # Get the updated DataFrame
     updated_df = grid_response["data"]
-    selected_rows = grid_response["selected_rows"]  # Get selected row(s)
 
     # Print selected rows for debugging
     st.write("Selected rows:", selected_rows)
