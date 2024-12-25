@@ -53,7 +53,7 @@ def update_gsheet_data(films_df):
 films_df = get_gsheet_data()
 
 # Title of the app
-st.title("Streamlit Film Database")
+st.title("Jim's Film Database")
 
 # Tabs for different sections
 tabs = ["Add Film", "Films Database"]
