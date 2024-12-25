@@ -107,22 +107,15 @@ if selected_tab == "Film Database":
     
     if st.button("Delete Selected Row"):
         if len(selected_rows) > 0:
-            # Get the selected row's values
-            selected_title = selected_rows[0]['Title']
-            selected_genre = selected_rows[0]['Genre']
-            selected_director = selected_rows[0]['Director']
-            selected_year = str(selected_rows[0]['Year'])
-            
-            # Create mask for exact row match
-            mask = ~((films_df['Title'] == selected_title) & 
-                     (films_df['Genre'] == selected_genre) & 
-                     (films_df['Director'] == selected_director) & 
-                     (films_df['Year'].astype(str) == selected_year))
-            
-            # Filter DataFrame
-            films_df = films_df[mask]
-            
-            # Update Google Sheets
+            selected_df = pd.DataFrame(selected_rows)
+            films_df = films_df.reset_index(drop=True)
+            selected_index = films_df[
+                (films_df['Title'] == selected_df.iloc[0]['Title']) & 
+                (films_df['Genre'] == selected_df.iloc[0]['Genre']) & 
+                (films_df['Director'] == selected_df.iloc[0]['Director']) & 
+                (films_df['Year'] == selected_df.iloc[0]['Year'])
+            ].index
+            films_df = films_df.drop(selected_index)
             update_gsheet_data(films_df)
             st.success("Selected film(s) have been deleted!")
         else:
