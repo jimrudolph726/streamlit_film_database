@@ -104,10 +104,7 @@ if selected_tab == "Film Database":
 
     # Print selected rows for debugging
     st.write("Selected rows:", selected_rows)
-    
-    # Inspect the selected rows data structure
-    st.write("Selected rows:", selected_rows)
-    
+
     if st.button("Delete Selected Row"):
         if len(selected_rows) > 0:  # Check if there are selected rows
             for row in selected_rows:
