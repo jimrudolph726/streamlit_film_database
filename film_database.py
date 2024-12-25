@@ -51,7 +51,7 @@ def update_gsheet_data(films_df):
 
 # Load data from Google Sheets
 films_df = get_gsheet_data()
-
+films_df['Year'] = films_df['Year'].astype(str)
 # Title of the app
 st.title("Jim's Film Database")
 
