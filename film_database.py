@@ -101,8 +101,6 @@ if selected_tab == "Film Database":
     # Get the updated DataFrame
     updated_df = grid_response["data"]
     selected_rows = grid_response["selected_rows"]
-    # Print selected rows for debugging
-    st.write("Selected rows:", selected_rows)
     
     if st.button("Delete Selected Row"):
         if len(selected_rows) > 0:
