@@ -56,7 +56,7 @@ films_df['Year'] = films_df['Year'].astype(str)
 st.title("Jim's Film Database")
 
 # Tabs for different sections
-tabs = ["Add Film", "Films Database"]
+tabs = ["Add Film", "Film Database"]
 selected_tab = st.selectbox("Choose a section", tabs)
 
 if selected_tab == "Add Film":
