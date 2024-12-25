@@ -65,7 +65,7 @@ if selected_tab == "Add Film":
         title = st.text_input("Movie Title")
         genre = st.text_input("Genre")
         director = st.text_input("Director")
-        year = st.number_input("Year Released", min_value=1900, max_value=2024, step=1)
+        year = st.number_input("Year", min_value=1900, max_value=2024, step=1)
         submit_button = st.form_submit_button(label="Add Film")
 
         # Add film to the database if the submit button is pressed
