@@ -6,17 +6,17 @@ import os
 
 # Load credentials from Streamlit secrets
 credentials_info = {
-    "type": st.secrets["GOOGLE_CREDENTIALS_TYPE"],
-    "project_id": st.secrets["GOOGLE_CREDENTIALS_PROJECT_ID"],
-    "private_key_id": st.secrets["GOOGLE_CREDENTIALS_PRIVATE_KEY_ID"],
-    "private_key": st.secrets["GOOGLE_CREDENTIALS_PRIVATE_KEY"],
-    "client_email": st.secrets["GOOGLE_CREDENTIALS_CLIENT_EMAIL"],
-    "client_id": st.secrets["GOOGLE_CREDENTIALS_CLIENT_ID"],
-    "auth_uri": st.secrets["GOOGLE_CREDENTIALS_AUTH_URI"],
-    "token_uri": st.secrets["GOOGLE_CREDENTIALS_TOKEN_URI"],
-    "auth_provider_x509_cert_url": st.secrets["GOOGLE_CREDENTIALS_AUTH_PROVIDER_X509_CERT_URL"],
-    "client_x509_cert_url": st.secrets["GOOGLE_CREDENTIALS_CLIENT_X509_CERT_URL"],
-    "universe_domain": st.secrets["GOOGLE_CREDENTIALS_UNIVERSE_DOMAIN"]
+    "type": st.secrets["google_credentials"]["type"],
+    "project_id": st.secrets["google_credentials"]["project_id"],
+    "private_key_id": st.secrets["google_credentials"]["private_key_id"],
+    "private_key": st.secrets["google_credentials"]["private_key"],
+    "client_email": st.secrets["google_credentials"]["client_email"],
+    "client_id": st.secrets["google_credentials"]["client_id"],
+    "auth_uri": st.secrets["google_credentials"]["auth_uri"],
+    "token_uri": st.secrets["google_credentials"]["token_uri"],
+    "auth_provider_x509_cert_url": st.secrets["google_credentials"]["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": st.secrets["google_credentials"]["client_x509_cert_url"],
+    "universe_domain": st.secrets["google_credentials"]["universe_domain"]
 }
 
 
