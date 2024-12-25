@@ -75,22 +75,11 @@ if selected_tab == "Add Film":
             update_gsheet_data(films_df)
             st.success(f"Film '{title}' added to the database!")
 
-# Display available films for deletion
-st.subheader("Delete a Film")
+# Display the films in the database
+st.subheader("Films You Have Seen")
 
 if len(films_df) > 0:
-    film_titles = films_df["Title"].tolist()
-    selected_film = st.selectbox("Select a film to delete", film_titles)
-    delete_button = st.button("Delete Film")
-
-    if delete_button:
-        # Find the index of the selected film and delete it
-        film_to_delete = films_df[films_df["Title"] == selected_film]
-        films_df = films_df.drop(film_to_delete.index)
-        
-        # Update the Google Sheets data with the modified DataFrame
-        update_gsheet_data(films_df)
-        st.success(f"Film '{selected_film}' has been deleted from the database!")
-        st.experimental_rerun()  # Refresh the app to reflect changes
+    st.dataframe(films_df)
 else:
     st.write("No films added yet.")
+
