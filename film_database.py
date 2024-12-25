@@ -102,17 +102,25 @@ if selected_tab == "Film Database":
     updated_df = grid_response["data"]
     selected_rows = grid_response["selected_rows"]  # Get selected row(s)
 
+    # Print selected rows for debugging
+    st.write("Selected rows:", selected_rows)
+    
     if st.button("Delete Selected Row"):
         if len(selected_rows) > 0:  # Check if there are selected rows
             for row in selected_rows:
-                # Assuming 'Title' is unique
-                films_df = films_df[films_df['Title'] != row['Title']]
+                # Assuming each row is a dictionary, check if it's a string or dict
+                if isinstance(row, dict):
+                    st.write("Row is a dictionary:", row)
+                    films_df = films_df[films_df['Title'] != row['Title']]  # Access Title properly
+                else:
+                    st.warning("Selected row is not in the expected format.")
             
             # Update Google Sheets with the modified DataFrame
             update_gsheet_data(films_df)
             st.success("Selected film(s) have been deleted!")
         else:
             st.warning("Please select a row to delete.")
+
 
     # Button to save edits
     if st.button("Save Changes"):
