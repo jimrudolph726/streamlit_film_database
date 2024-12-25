@@ -104,15 +104,19 @@ if selected_tab == "Film Database":
 
     # Button to delete selected row
     if st.button("Delete Selected Row"):
-        if len(selected_rows) > 0:  # Check if there are any selected rows
-        # Identify the row to delete
-            row_to_delete = selected_rows[0]
-            films_df = films_df[~(films_df["Title"] == row_to_delete["Title"])]  # Remove row based on a unique column
-            update_gsheet_data(films_df)  # Update Google Sheets
-            st.success(f"Deleted film: {row_to_delete['Title']}")
+        if selected_rows:  # Check if selected_rows is not empty
+            row_to_delete = selected_rows[0]  # Get the first selected row (assuming it's a dictionary)
+            
+            # Ensure 'Title' key exists in the row (or use another unique identifier)
+            if 'Title' in row_to_delete:
+                title_to_delete = row_to_delete['Title']
+                films_df = films_df[~(films_df["Title"] == title_to_delete)]  # Remove row based on Title
+                update_gsheet_data(films_df)  # Update Google Sheets
+                st.success(f"Deleted film: {title_to_delete}")
+            else:
+                st.warning("The selected row does not have a 'Title' key.")
         else:
             st.warning("Please select a row to delete.")
-
     # Button to save edits
     if st.button("Save Changes"):
         films_df = updated_df  # Update the DataFrame with the new data
