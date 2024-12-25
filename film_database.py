@@ -79,9 +79,18 @@ if selected_tab == "Add Film":
 if selected_tab == "Film Database":
     st.header("Film Database")
     st.write("Below is your current film database. You can edit cells or select a row to delete.")
+    
+    # Search functionality
+    search_term = st.text_input("Search Films (by title, genre, director, or year):")
+    if search_term:
+        # Filter the DataFrame based on the search term
+        search_term = search_term.lower()
+        filtered_df = films_df[films_df.apply(lambda row: row.astype(str).str.contains(search_term).any(), axis=1)]
+    else:
+        filtered_df = films_df
 
-    # Configure AG Grid options
-    gb = GridOptionsBuilder.from_dataframe(films_df)
+    # Configure AG Grid options for the filtered DataFrame
+    gb = GridOptionsBuilder.from_dataframe(filtered_df)
     gb.configure_default_column(editable=True)  # Make all columns editable
     gb.configure_selection(selection_mode="single", use_checkbox=True)  # Add row selection with checkbox
     grid_options = gb.build()
