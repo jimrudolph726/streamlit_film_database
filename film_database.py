@@ -74,9 +74,9 @@ if selected_tab == "Add Film":
             films_df = pd.concat([films_df, new_film], ignore_index=True)
             update_gsheet_data(films_df)
             st.success(f"Film '{title}' added to the database!")
-
-# Display the films in the database
-st.subheader("Films You Have Seen")
+else:
+    # Display the films in the database
+    st.subheader("Films You Have Seen")
 
 if len(films_df) > 0:
     st.dataframe(films_df)
