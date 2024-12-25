@@ -83,9 +83,11 @@ if selected_tab == "Film Database":
     # Search functionality
     search_term = st.text_input("Search Films (by title, genre, director, or year):")
     if search_term:
-        # Filter the DataFrame based on the search term
+        # Convert the search term to lowercase to make it case-insensitive
         search_term = search_term.lower()
-        filtered_df = films_df[films_df.apply(lambda row: row.astype(str).str.contains(search_term).any(), axis=1)]
+        
+        # Filter the DataFrame to only include rows where any column contains the search term
+        filtered_df = films_df[films_df.apply(lambda row: row.astype(str).str.contains(search_term, case=False).any(), axis=1)]
     else:
         filtered_df = films_df
 
@@ -97,7 +99,7 @@ if selected_tab == "Film Database":
 
     # Display the editable table
     grid_response = AgGrid(
-        films_df,
+        filtered_df,
         gridOptions=grid_options,
         data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
         update_mode="MODEL_CHANGED",
@@ -126,7 +128,6 @@ if selected_tab == "Film Database":
             st.success("Selected film(s) have been deleted!")
         else:
             st.warning("Please select a row to delete.")
-
 
     # Button to save edits
     if st.button("Save Changes"):
