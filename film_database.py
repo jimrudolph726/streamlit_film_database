@@ -4,6 +4,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 from google.oauth2 import service_account
+from st_aggrid import AgGrid, GridOptionsBuilder, DataReturnMode
 
 # Load credentials from Streamlit secrets
 credentials_info = {
@@ -76,20 +77,46 @@ if selected_tab == "Add Film":
             st.success(f"Film '{title}' added to the database!")
             
 if selected_tab == "Film Database":
-    # Search functionality
-    search_term = st.text_input("Search films by title, genre, director or year")
-    
-    # Filter the DataFrame based on the search term
-    if search_term:
-        filtered_df = films_df[films_df.apply(lambda row: row.astype(str).str.contains(search_term, case=False).any(), axis=1)]
-    else:
-        filtered_df = films_df  # If no search term, show all films
+    st.header("Film Database")
+    st.write("Below is your current film database. You can edit cells or select a row to delete.")
 
-    # Display the films in the database
-    st.subheader("Films You Have Seen")
+    # Configure AG Grid options
+    gb = GridOptionsBuilder.from_dataframe(films_df)
+    gb.configure_default_column(editable=True)  # Make all columns editable
+    gb.configure_selection(selection_mode="single", use_checkbox=True)  # Add row selection with checkbox
+    grid_options = gb.build()
 
-    if len(filtered_df) > 0:
-        st.dataframe(filtered_df)
-    else:
-        st.write("No films found matching your search.")
+    # Display the editable table
+    grid_response = AgGrid(
+        films_df,
+        gridOptions=grid_options,
+        data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
+        update_mode="MODEL_CHANGED",
+        fit_columns_on_grid_load=True,
+        theme="streamlit",
+        enable_enterprise_modules=False,
+        height=400,
+    )
+
+    # Get the updated DataFrame
+    updated_df = grid_response["data"]
+    selected_rows = grid_response["selected_rows"]  # Get selected row(s)
+
+    # Button to delete selected row
+    if st.button("Delete Selected Row"):
+        if selected_rows:
+            # Identify the row to delete
+            row_to_delete = selected_rows[0]
+            films_df = films_df[~(films_df["Title"] == row_to_delete["Title"])]  # Remove row based on a unique column
+            update_gsheet_data(films_df)  # Update Google Sheets
+            st.success(f"Deleted film: {row_to_delete['Title']}")
+        else:
+            st.warning("Please select a row to delete.")
+
+    # Button to save edits
+    if st.button("Save Changes"):
+        films_df = updated_df  # Update the DataFrame with the new data
+        update_gsheet_data(films_df)  # Save changes to Google Sheets
+        st.success("Changes saved successfully!")
+
 
