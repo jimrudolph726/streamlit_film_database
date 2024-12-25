@@ -19,11 +19,14 @@ credentials_info = {
     "client_x509_cert_url": os.getenv("GOOGLE_CREDENTIALS_CLIENT_X509_CERT_URL"),
     "universe_domain": os.getenv("GOOGLE_CREDENTIALS_UNIVERSE_DOMAIN")
 }
+
 # Setup the connection to Google Sheets
 def get_gsheet_data():
     # Define the scope of the API
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+    
+    # Use the credentials loaded from Streamlit secrets
+    credentials = service_account.Credentials.from_service_account_info(credentials_info, scopes=scope)
     client = gspread.authorize(credentials)
     
     # Open the sheet by name
@@ -34,7 +37,9 @@ def get_gsheet_data():
 def update_gsheet_data(films_df):
     # Define the scope of the API
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+    
+    # Use the credentials loaded from Streamlit secrets
+    credentials = service_account.Credentials.from_service_account_info(credentials_info, scopes=scope)
     client = gspread.authorize(credentials)
     
     # Open the sheet by name
