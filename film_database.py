@@ -79,22 +79,8 @@ elif selected_tab == "Films Database":
     # Display the films in the database
     st.subheader("Films You Have Seen")
 
+
 if len(films_df) > 0:
-    for i, row in films_df.iterrows():
-        col1, col2, col3, col4, col5 = st.columns([3, 3, 3, 1, 1])
-        
-        with col1:
-            st.write(row["Title"])
-        with col2:
-            st.write(row["Genre"])
-        with col3:
-            st.write(row["Director"])
-        with col4:
-            st.write(row["Year"])
-        with col5:
-            if st.button("Delete", key=row["Title"]):
-                films_df = films_df.drop(i)
-                update_gsheet_data(films_df)
-                st.experimental_rerun()  # Refresh the app to reflect changes
+    st.dataframe(films_df)
 else:
     st.write("No films added yet.")
