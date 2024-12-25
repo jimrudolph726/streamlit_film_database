@@ -105,10 +105,16 @@ if selected_tab == "Film Database":
     # Print selected rows for debugging
     st.write("Selected rows:", selected_rows)
     
+    # Inspect the selected rows data structure
+    st.write("Selected rows:", selected_rows)
+    
     if st.button("Delete Selected Row"):
         if len(selected_rows) > 0:  # Check if there are selected rows
             for row in selected_rows:
-                # Assuming each row is a dictionary, check if it's a string or dict
+                st.write("Row type:", type(row))  # Check the type of the row
+                st.write("Row content:", row)  # Check the content of the row
+    
+                # If the row is a dictionary, proceed with the deletion
                 if isinstance(row, dict):
                     st.write("Row is a dictionary:", row)
                     films_df = films_df[films_df['Title'] != row['Title']]  # Access Title properly
@@ -120,7 +126,6 @@ if selected_tab == "Film Database":
             st.success("Selected film(s) have been deleted!")
         else:
             st.warning("Please select a row to delete.")
-
 
     # Button to save edits
     if st.button("Save Changes"):
