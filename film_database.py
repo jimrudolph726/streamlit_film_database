@@ -105,15 +105,19 @@ if selected_tab == "Film Database":
     # Print selected rows for debugging
     st.write("Selected rows:", selected_rows)
     
-    # Replace the deletion section with this code:
     if st.button("Delete Selected Row"):
         if len(selected_rows) > 0:
-            # Create DataFrame from selected rows
-            selected_df = pd.DataFrame(selected_rows)
+            # Get the selected row's values
+            selected_title = selected_rows[0]['Title']
+            selected_genre = selected_rows[0]['Genre']
+            selected_director = selected_rows[0]['Director']
+            selected_year = str(selected_rows[0]['Year'])
             
-            # Create mask for rows to keep
-            mask = ~films_df.apply(lambda row: (row[['Title', 'Genre', 'Director', 'Year'].astype(str)] == 
-                                              selected_df.iloc[0][['Title', 'Genre', 'Director', 'Year']].astype(str)).all(), axis=1)
+            # Create mask for exact row match
+            mask = ~((films_df['Title'] == selected_title) & 
+                     (films_df['Genre'] == selected_genre) & 
+                     (films_df['Director'] == selected_director) & 
+                     (films_df['Year'].astype(str) == selected_year))
             
             # Filter DataFrame
             films_df = films_df[mask]
