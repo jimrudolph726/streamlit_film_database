@@ -58,7 +58,7 @@ st.title("Jim's Film Database")
 
 # Tabs for different sections
 tabs = ["Add Film", "Film Database"]
-selected_tab = st.selectbox("Choose a section", tabs)
+selected_tab = st.tabs("Choose a section", tabs)
 
 if selected_tab == "Add Film":
     # Form to input new film
