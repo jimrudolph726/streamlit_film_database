@@ -57,10 +57,9 @@ films_df['Year'] = films_df['Year'].astype(str)
 st.title("Jim's Film Database")
 
 # Tabs for different sections
-tabs = ["Add Film", "Film Database"]
-selected_tab = st.tabs("Choose a section", tabs)
+tab1, tab2 = st.tabs(["Add Film", "Film Database"])
 
-if selected_tab == "Add Film":
+with tab1:
     # Form to input new film
     with st.form(key="film_form"):
         title = st.text_input("Movie Title")
@@ -76,7 +75,7 @@ if selected_tab == "Add Film":
             update_gsheet_data(films_df)
             st.success(f"Film '{title}' added to the database!")
             
-if selected_tab == "Film Database":
+with tab2:
     st.header("Film Database")
     st.write("Below is your current film database. You can edit cells or select a row to delete.")
     
