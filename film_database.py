@@ -76,9 +76,6 @@ with tab1:
             st.success(f"Film '{title}' added to the database!")
             
 with tab2:
-    st.header("Film Database")
-    st.write("Below is your current film database. You can edit cells or select a row to delete.")
-    
     # Search functionality
     search_term = st.text_input("Search Films (by title, genre, director, or year):")
     if search_term:
